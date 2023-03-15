@@ -1,0 +1,127 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Thong ke Tour";
+}
+@using X.PagedList.Mvc.Core;
+@model WEBApplication.Models.ThongKeModel;
+
+
+
+<h1 class="text-center">THỐNG KÊ TOUR</h1>
+
+<div class="row">
+
+    <!------------ Bảng bên trái------------------>
+    <div class="col col-xl-4 pt-xl-5">
+        <div class="card">
+            <div class="card-body">
+                <form method="get">
+                    <div class="row">
+                        <div class="col col-xl-12 form-group">
+                            <label for="loaiHinh">Mã tour</label>
+                            <select class="form-control" data-selected-text-format="value" id="maTour"
+                                    asp-for="idTour_TKT"
+                                    asp-items=@(new SelectList(ViewBag.DSTour,"maTour","maTour"))>
+                                <option value="null">Nothing selected</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label for="loaiHinh">Giá tour từ ngày</label>
+                            <input type="date" class="form-control" asp-for="startDateTKTour" id="startDateTKT" />
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            <label for="loaiHinh">Đến ngày</label>
+
+                            <input type="date" class="form-control" asp-for="endDateTKTour" id="endDateTKT" />
+                        </div>
+                        <div class="col col-xl-6 form-group">
+                            <label for="loaiHinh">Tổng số đoàn: </label>
+                            <input type="text" class="form-control" readonly="readonly" value="@Model.kq_TK_Tour.Select(x => x.maDoanTK).Distinct().Count().ToString()" />
+                        </div>
+                        <div class="col col-xl-6 form-group">
+                            <label for="loaiHinh">Tổng doanh số: </label>
+                            <input type="text" class="form-control" readonly="readonly" value="@Model.kq_TK_Tour.Sum(x=> x.doanhThu)" />
+                        </div>
+
+
+                      
+
+                        <div class="col-xl-12 text-center">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <button class="btn btn-lg btn-block  btn-success" type="submit">Tìm kiếm</button>
+                                </div>
+                                <div class="col-xl-6">
+                                    <button class="btn btn-lg btn-block  btn-success" type="submit" onclick="document.getElementById('startDateTKT').value = '';  document.getElementById('maTour').value = ''
+                                document.getElementById('endDateTKT').valueAsDate = new Date();">
+                                        Làm mới
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!------------ Bảng bên phải------------------>
+    <div class="col col-xl-8 pt-xl-5">
+        <div class="row">
+            
+
+
+            <table class="table table-bordered table-striped">
+                <thead class="thead bg-success text-center" style="color:aliceblue; ">
+                    <tr>
+                        <th>Mã tour</th>
+                        <th>Tên tour</th>
+                        <th>Mã đoàn</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày ngày kết thúc</th>
+                        <th>Giá tour</th>
+                        <th>SL khách</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var T in Model.kq_TK_Tour)
+                    {
+                        <tr>
+                            <td>@T.maTourTK</td>
+                            <td>@T.tenTourTK</td>
+                            <td>@T.maDoanTK</td>
+                            <td>@T.ngayKhoiHanhTK</td>
+                            <td>@T.ngayKetThucTK</td>
+                            <td>@T.giaTourTK</td>
+                            <td>@T.SLkhach</td>
+                            <td>@T.doanhThu</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div id="container" style="margin-left: 10px">
+                <p></p>
+                <p></p>
+                <div class="pagination" style="margin-left: 400px">
+                    Page @(Model.kq_TK_Tour.PageCount < Model.kq_TK_Tour.PageNumber ? 0 : Model.kq_TK_Tour.PageNumber)
+                    of @Model.kq_TK_Tour.PageCount
+                    <span class="clearfix"> @Html.PagedListPager(Model.kq_TK_Tour, page => Url.Action("TK_Tour", new { page }))</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+

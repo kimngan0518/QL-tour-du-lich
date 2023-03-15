@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model TourViewModel
+
+@using X.PagedList.Mvc.Core;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<h1 class="text-center">DANH SÁCH TOUR DU LỊCH</h1>
+<div class="row">
+    <div class="col col-xl-4 pt-xl-5" >
+        <div class="card">
+            <form  method="get" class="card-body text-center">
+                <div class="row">
+                    <div class="form-group col-xl-9">
+                        <input class="form-control" asp-for="searchString" placeholder="Thông tin tour cần tìm"/>
+                    </div>
+                    <div class="col-xl-3">
+                        <button class="btn btn-xl btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr />
+        <div class="card" style="height:fit-content;">
+            <h3  class="card-title text-center">Thêm Thông Tin Tour Du Lịch</h3>
+            <form asp-controller="Tours" asp-action="Create" method="post"  class="card-body">
+                <div class="row">
+                    <div class="col col-xl-6 form-group">
+                        <label for="tenTour">Tên Tour</label>
+                        <input id="tenTour" type="text" asp-for="@Model.tour!.tenTour" class="form-control" />
+                    </div>
+                    <div class="col col-xl-6 form-group">
+                        <label for="tenKhachSan">Tên Khách Sạn</label>
+                        <input id="tenKhachSan" type="text" asp-for="@Model.tour!.khachSan" class="form-control" />
+                    </div>
+                    <div class="col col-xl-6 form-group">
+                        <label for="dacDiem">Đặc Điểm</label>
+                        <input id="dacDiem" type="text" asp-for="@Model.tour!.dacDiem" class="form-control" />
+                    </div>
+                    <div class="col col-xl-6 form-group">
+                        <label for="loaiHinh">Loại Hình Du Lịch</label>
+                        <select class="selectpicker form-control" asp-for="@Model.tour!.maLoaiHinh" data-selected-text-format="value"
+                                asp-items=@(new SelectList(ViewBag.DSLoaiHinh,"maLoaiHinh","tenLoaiHinh"))>
+                        </select>
+                    </div>
+                    <div class="col col-xl-12 form-group">
+                        <label for="noiDung">Nội Dung</label>
+                        <textarea id="noiDung" class="form-control" asp-for="@Model.tour!.noiDungTour" cols="10"
+                                  rows="5"></textarea>
+                    </div>
+                    <div class="col col-xl-12 text-center">
+                        <button class="btn btn-lg btn-block btn-success" type="submit" style="color:aliceblue;" onclick="return ValidateNewTour();">Thêm Tour</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+    <div class="col col-xl-8 pt-xl-5">
+      
+        <table class="table table-bordered table-striped">
+            <thead class="thead bg-success text-center" style="color:aliceblue;">
+                <tr>
+                    <th>Tên Tour</th>
+                    <th>Tên Khách Sạn</th>
+                    <th>Đặc Điểm</th>
+                    <th>Loại Hình</th>
+                    <th>Nội Dung Tour</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tours!)
+                {
+                    <tr>
+                        <td>@item.tenTour</td>
+                        <td>@item.khachSan</td>
+                        <td>@item.dacDiem</td>
+                        <td>@item.LoaiHinhDuLich.tenLoaiHinh</td>
+                        <td>@item.noiDungTour</td>
+                        <td style="width:fit-content;">
+
+                            <a href='@Url.Action("Details", "Tours",new { id=item.maTour})'>
+                                <input type='button' class="btn btn-xl btn-warning" value='Chi tiết' />
+                            </a>
+                            <a href='@Url.Action("Delete", "Tours",new {  id=item.maTour })'>
+                                <input type='button' class="btn btn-danger" value='Xóa' />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="container" style="margin-left: 20px">
+            <p></p>
+            <p></p>
+            <div class="pagination" style="margin-left: 400px">
+                Page @(Model.Tours.PageCount < Model.Tours.PageNumber ? 0 : Model.Tours.PageNumber)
+                of @Model.Tours.PageCount
+                <span class="clearfix"> @Html.PagedListPager(Model.Tours, page => Url.Action("Index", new { page }))</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function ValidateNewTour() {
+        var tenTour = $('#tenTour').val();
+        var tenKhachSan = $('#tenKhachSan').val();
+        var dacDiem = $('#dacDiem').val();
+        var noiDung = $('#noiDung').val();
+        if (tenTour == "" || tenTour == null) {
+            alert("Tên Tour không được bỏ trống");
+            return false;
+        } else {
+            if (tenKhachSan == "" || tenKhachSan == null) {
+                alert("Tên Khách Sạn không được bỏ trống");
+                return false;
+            } else {
+                if (dacDiem == "" || dacDiem == null) {
+                    alert("Đặc điểm không được bỏ trống");
+                    return false;
+                } else {
+                    if (noiDung == "" || noiDung == null) {
+                        alert("Nội dung không được bỏ trống");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+</script>
