@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Form_AddNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_ChiTietDoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_ChiTietTour.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_Doan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_DSKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_DSTour.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_KhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_KhachHangDoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_ThemDiaDiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_ThemGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_ThongKe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_TK_ChiPhi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form_TK_NhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
